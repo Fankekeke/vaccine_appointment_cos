@@ -1,17 +1,17 @@
-### 基于SpringBoot + Vue的疫苗预约销售系统.
+![](https://img.shields.io/badge/License-MIT-blue.svg)
 
-疫苗预约系统、疫苗接种预约平台、疫苗销售管理、疾控疫苗预约系统
+![](https://img.shields.io/badge/Version-1.0.0-brightgreen.svg)
 
-###### 管理员：
-公告管理 、疫苗管理 、库存统计 、物流信息 、订单详情 、订单评价 、订单信息 、缴费记录 、商家管理 、商家库存 、员工管理 、用户管理 、管理员管理 、供应商管理 、疫苗处方 、疫苗采购 、库房预警 、疫苗处方 、采购物流、数据统计。
+![](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
-###### 用户：
-账户注册登录、密码修改、个人信息 、我的订单 、缴费记录 、订单评价 、疫苗购订 、在线支付 、疫苗处方。
+# 基于 SpringBoot + Vue  的疫苗预约销售系统
 
-###### 商家：
-商家注册登录、密码修改、疫苗处方 、库存统计 、订单物流 、订单管理 、订单评价 、店内库存 、员工管理。
+预约接种 · 疫苗处方 · 采购入库 · 商家门店 · 订单支付 · 库存预警 · 物流追溯 | 面向疫苗预约、销售与供应链协同的一体化平台
+
+本项目是一套基于 **Spring Boot + Vue** 的疫苗预约销售系统，采用前后端分离架构，覆盖 **管理员、用户、商家、员工** 四类角色。系统围绕“疫苗采购入库 → 商家库存管理 → 用户预约购订 → 在线支付 → 物流配送 → 接种核销 → 评价反馈 → 数据统计”的业务闭环设计，并引入“疫苗处方”机制，支持医生评估、处方开具、处方预约、处方购订等医防协同场景。
 
 #### 安装环境
+️**注意**：请确保您的开发环境已安装以下依赖。
 
 JAVA 环境 
 
@@ -19,24 +19,160 @@ Node.js环境 [https://nodejs.org/en/] 选择14.17
 
 Yarn 打开cmd， 输入npm install -g yarn !!!必须安装完毕nodejs
 
-Mysql 数据库 [https://blog.csdn.net/qq_40303031/article/details/88935262] 一定要把账户和密码记住
+Mysql 数据库 一定要把账户和密码记住
 
 redis
 
-Idea 编译器 [https://blog.csdn.net/weixin_44505194/article/details/104452880]
+Idea 编译器
 
-WebStorm OR VScode 编译器 [https://www.jianshu.com/p/d63b5bae9dff]
+WebStorm OR VScode 编译器
 
 #### 采用技术及功能
 
 后端：SpringBoot、MybatisPlus、MySQL、Redis、
 前端：Vue、Apex、Antd、Axios
 
-平台前端：vue(框架) + vuex(全局缓存) + rue-router(路由) + axios(请求插件) + apex(图表)  + antd-ui(ui组件)
+平台前端：vue(框架) + vuex(全局缓存) + rue-router(路由) + axios(请求插件) + apex(图表)  + antd-ui(ui组件) + 百度地图 API
 
 平台后台：springboot(框架) + redis(缓存中间件) + shiro(权限中间件) + mybatisplus(orm) + restful风格接口 + mysql(数据库)
 
 开发环境：windows10 or windows7 ， vscode or webstorm ， idea + lambok
+
+---
+
+## 核心特性
+
+- **疫苗处方闭环**：支持用户端查看/申请疫苗处方，商家端维护处方目录，管理员端管理处方规则，实现“评估—处方—预约—购订—接种”全流程。
+- **预约与库存联动**：用户预约时实时校验疫苗库存与号源，预约成功预占库存，接种核销后扣减库存，取消预约自动释放。
+- **采购—销售双链路**：管理员负责疫苗采购、供应商管理、采购物流与库房入库；商家负责门店库存、订单发货与物流管理。
+- **库存预警与效期管理**：支持按疫苗设置最低库存、最高库存、近效期预警，库存不足或临近过期时自动提醒管理员与商家。
+- **订单全生命周期管理**：覆盖待付款、待发货、已发货、已完成、已取消、已退款等状态，支持缴费记录、物流跟踪、订单评价。
+---
+
+## 适用场景
+
+- 社区卫生服务中心疫苗预约与接种管理
+- 民营医疗机构疫苗销售与预约平台
+- 连锁药店/疫苗门店线上预约销售系统
+- 疫苗采购、库存、销售一体化管理平台
+- 医防协同场景下的疫苗处方与预约系统
+- 计算机类毕业设计/课程设计项目
+---
+
+## 功能模块概览
+
+## 管理员端
+
+管理员为平台运营中枢，负责全局管控：
+
+### 疫苗与处方
+
+- **疫苗管理**：维护疫苗基础信息，包括疫苗名称、生产厂家、批准文号、规格、适用人群、禁忌症、储存条件、价格、状态。
+- **疫苗处方**：管理疫苗处方规则与处方目录，包括处方名称、适用人群、推荐疫苗、处方说明、有效期、开具条件，支持处方上下架。
+- **供应商管理**：管理疫苗供应商信息，包括供应商名称、联系人、联系电话、地址、资质文件、合作状态。
+- **疫苗采购**：创建采购订单，选择供应商与采购疫苗，填写采购数量、单价、期望到货日期，提交后进入采购流程。
+- **采购物流**：查看采购订单物流信息，包括物流公司、物流单号、发货时间、预计到货时间、物流轨迹。
+
+### 库存与库房
+
+- **库房管理**：管理平台库房信息，包括库房名称、位置、负责人、容量、状态。
+- **库房预警**：配置库存预警规则，包括最低库存、最高库存、近效期天数，查看当前预警列表。
+- **商家库存**：查看各商家门店的疫苗库存情况，包括库存数量、预警状态、最后补货时间。
+- **库存统计**：按疫苗类型、商家、时间段统计库存数量、入库量、出库量、库存周转率。
+
+### 订单与物流
+
+- **订单信息**：管理全平台订单，包括订单号、下单用户、所属商家、订单金额、支付状态、订单状态、下单时间。
+- **订单详情**：查看订单明细，包括疫苗信息、数量、单价、处方信息、收货地址、支付信息。
+- **订单评价**：查看用户对订单的评价，包括评分、评价内容、评价时间、商家回复。
+- **物流信息**：管理订单物流，包括物流公司、物流单号、发货地址、收货地址、物流轨迹、签收状态。
+
+### 用户与员工
+
+- **用户管理**：管理注册用户，包括用户ID、昵称、手机号、身份证、注册时间、账户状态、预约次数。
+- **员工管理**：管理平台员工，包括员工ID、姓名、工号、岗位、所属部门、手机号、账户状态。
+- **商家管理**：管理入驻商家，包括商家ID、企业名称、联系人、联系电话、地址、资质审核状态、合作状态。
+- **管理员管理**：管理后台管理员账号，包括用户名、角色、权限范围、最后登录时间、账户状态。
+
+### 运营与统计
+
+- **公告管理**：发布平台公告，包括公告标题、内容、类型、发布时间、置顶状态。
+- **缴费记录**：查看全平台缴费流水，包括订单号、支付方式、支付金额、支付状态、支付时间、交易流水号。
+- **数据统计**：综合数据看板，展示今日预约量、今日订单数、销售额、库存预警数、活跃商家数、用户增长等核心指标。
+- **订单年月统计**：按月份/年份统计订单数量、订单金额、预约量、接种量，支持同比/环比分析与图表导出。
+
+## 用户端
+
+用户通过 Web / 小程序进行疫苗预约与购订：
+
+### 账户与个人
+
+- **账户注册登录**：支持手机号+验证码注册与登录，支持微信授权登录。
+- **密码修改**：修改登录密码。
+- **个人信息**：维护个人基本信息，包括姓名、身份证号、手机号、头像、紧急联系人，支持为家人建立接种档案。
+- **收货地址**：管理收货地址，用于疫苗配送场景。
+
+### 预约与购订
+
+- **疫苗购订**：浏览可预约疫苗，查看疫苗详情、库存、价格、适用人群、禁忌症，支持加入购物车、立即购买。
+- **疫苗处方**：查看个人疫苗处方，包括处方名称、推荐疫苗、处方说明、有效期，支持凭处方预约/购订。
+- **在线支付**：支持微信支付、支付宝等支付方式，支付成功后生成预约凭证或订单。
+- **我的订单**：查看个人订单列表，包括订单状态、物流信息、接种状态，支持取消订单、申请退款。
+- **缴费记录**：查看个人支付历史，包括支付金额、支付方式、支付时间、关联订单。
+- **订单评价**：对已完成订单进行评价，包括评分、评价内容、图片上传。
+
+## 商家端
+
+商家通过专属门户管理门店业务：
+
+### 账户与门店
+
+- **商家注册登录**：商家提交企业资质注册，经管理员审核通过后激活账户。
+- **密码修改**：修改登录密码。
+- **店内库存**：管理本门店疫苗库存，包括库存数量、入库、出库、盘点、近效期预警。
+- **库存统计**：查看本门店库存统计数据，包括各疫苗库存量、出入库记录、库存周转情况。
+
+### 订单与处方
+
+- **订单管理**：查看本门店订单，包括待付款、待发货、已发货、已完成订单，支持发货处理、退款审核。
+- **订单物流**：录入与查看订单物流信息，包括物流公司、物流单号、发货时间、物流轨迹。
+- **订单评价**：查看用户对本门店订单的评价，支持回复评价。
+- **疫苗处方**：维护本门店可开具的疫苗处方目录，查看用户处方申请，支持处方审核与推荐。
+- **员工管理**：管理本门店员工账号，包括员工姓名、岗位、权限、账户状态。
+
+## 员工端
+
+员工主要负责采购检验与入库操作：
+
+- **账户注册登录**：员工由管理员创建账户后登录，首次登录强制修改密码。
+- **密码修改**：修改登录密码。
+- **个人信息**：查看个人基本信息，包括姓名、工号、岗位、所属部门。
+- **采购检验**：对采购到货的疫苗进行检验，录入检验结果（合格/不合格）、检验数量、不合格原因、检验照片，检验通过后触发入库。
+
+---
+
+## 项目结构
+
+```text
+pharmacy-dispensing-system/
+├── backend/            # 后端 API 服务
+│   ├── src/
+│   │   ├── controllers/  # 控制器
+│   │   ├── models/       # 数据模型
+│   │   ├── routes/       # 路由
+│   │   └── services/     # 业务逻辑
+│   └── package.json
+├── frontend/           # 前端 Web 应用
+│   ├── src/
+│   │   ├── views/      # 页面视图
+│   │   ├── components/ # 公共组件
+│   │   └── store/      # 状态管理
+│   └── package.json
+├── docs/               # 项目文档与 API 接口说明
+├── LICENSE
+└── README.md
+```
+---
 
 
 #### 前台启动方式
@@ -46,24 +182,25 @@ WebStorm OR VScode 编译器 [https://www.jianshu.com/p/d63b5bae9dff]
 #### 默认后台账户密码
 [管理员]
 admin
-1234qwer
+123456
+
+[用户]
+fank
+123456
 
 #### 项目截图
-暂无
-
 |  |  |
 |---------------------|---------------------|
-| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/2c12ed3d-c8e3-4767-9b10-54d6b94d2072.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/8129d19c-39cb-4b70-b50e-81516a7401a5.png) |
-| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/1ad1a8c2-0d7d-41b8-ab86-5f565cf1b9d4.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/892b86cf-3242-4f72-af97-ca8161671406.png) |
-| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/0c7fdf5a-b029-4d03-b933-8f17862e3654.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/70d31a70-0b81-4db8-8c80-56e9233f65aa.png) |
-| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/f5ca8ca9-bd70-4eb9-bf32-18677b21dcb3.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/63dbbdcf-8dc5-43e0-bb98-f66c5c67e9d1.png) |
-| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/d3904594-1682-4e52-9ad8-773147e12245.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/052ce775-ba54-4338-897b-9521c3b1913f.png) |
-| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/af1de67d-8530-4b0c-b650-b00c9b5fa4b1.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/26f9123d-3c6a-41e3-b21b-df7f7fe3386a.png) |
-| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/a80c7b3e-64d8-447a-9c8e-7242e7a69319.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/25fd6f47-af0d-40fe-9924-c1586114e6bc.png) |
-| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/69224351-6636-4abe-bae5-9e5294802a04.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/15efde07-2caf-4ed9-b502-e7c5700a31d2.png) |
-| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/756667aa-9aca-43d2-b1a8-4032721a1c44.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/4a239b05-1da1-4aca-86a6-095ed6ad0f9c.png) |
-| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/9160e180-2213-4446-9b83-aec3d445fdec.png) | ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/3dd50bfe-89b1-4567-aae1-1d061cb2718d.png) |
-| ![](https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/work/936e9baf53eb9a217af4f89c616dc19.png) |
+| ![](./assets/image%20(1).png) | ![](./assets/image%20(2).png) |
+| ![](./assets/image%20(3).png) | ![](./assets/image%20(4).png) |
+| ![](./assets/image%20(5).png) | ![](./assets/image%20(6).png) |
+| ![](./assets/image%20(7).png) | ![](./assets/image%20(8).png) |
+| ![](./assets/image%20(9).png) | ![](./assets/image%20(10).png) |
+| ![](./assets/image%20(11).png) | ![](./assets/image%20(12).png) |
+| ![](./assets/image%20(13).png) | ![](./assets/image%20(14).png) |
+| ![](./assets/image%20(15).png) | ![](./assets/image%20(16).png) |
+| ![](./assets/image%20(17).png) | ![](./assets/image%20(18).png) |
+| ![](./assets/image%20(19).png) | ![](./assets/image%20(20).png) |
 
 #### 演示视频
 
@@ -81,7 +218,10 @@ WeChat: `Storm_Berserker`
 
 > 项目部署调试不好包退！功能逻辑没讲明白包退！
 
+<div align=center><img align="center" src="./assets/product_word.png" alt="fankekeke" /></div>
+
 #### 其它资源
+[2026年-答辩顺利通过-客户评价🀄](https://berserker287.github.io/2026/06/29/2026%E5%B9%B4%E7%AD%94%E8%BE%A9%E9%A1%BA%E5%88%A9%E9%80%9A%E8%BF%87/)
 
 [2025年-答辩顺利通过-客户评价🍜](https://berserker287.github.io/2025/06/18/2025%E5%B9%B4%E7%AD%94%E8%BE%A9%E9%A1%BA%E5%88%A9%E9%80%9A%E8%BF%87/)
 
@@ -105,4 +245,8 @@ WeChat: `Storm_Berserker`
 
 More info: [悲伤的橘子树](https://berserker287.github.io/)
 
-<p><img align="center" src="https://fank-bucket-oss.oss-cn-beijing.aliyuncs.com/img/%E5%90%88%E4%BD%9C%E7%89%A9%E6%96%99%E6%A0%B7%E5%BC%8F%20(3).png" alt="fankekeke" /></p>
+<div align="center"><img align="center" src="./assets/chat_qr_code.png" alt="fankekeke" width=250 /></div>
+
+<p><img align="center" src="./assets/wechat_group.png" alt="fankekeke" /></p>
+
+**感谢查看**
